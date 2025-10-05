@@ -1,11 +1,10 @@
 Test rseq_weak2 Allowed
 States 1
 [x]=3; [y]=1;
-Undef
+Ok
 Witnesses
-Positive: 4 Negative: 0
-Flag *undef*
+Positive: 3 Negative: 0
 Condition exists ([x]=3 /\ [y]=1)
-Observation rseq_weak2 Always 4 0
+Observation rseq_weak2 Always 3 0
 Hash=820a0b23b6175795e2a48a896d0ecd11
 

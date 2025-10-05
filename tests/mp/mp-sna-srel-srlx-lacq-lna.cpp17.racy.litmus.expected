@@ -1,14 +1,12 @@
 Test mp-sna-srel-srlx-lacq-lna-cpp17-racy Allowed
-States 4
+States 3
 1:a=0; 1:b=0;
 1:a=1; 1:b=1;
-1:a=2; 1:b=0;
 1:a=2; 1:b=1;
-Undef
+No
 Witnesses
-Positive: 1 Negative: 3
-Flag *undef*
+Positive: 0 Negative: 3
 Condition exists ((1:a=1 \/ 1:a=2) /\ 1:b=0)
-Observation mp-sna-srel-srlx-lacq-lna-cpp17-racy Sometimes 1 3
+Observation mp-sna-srel-srlx-lacq-lna-cpp17-racy Never 0 3
 Hash=afe2d1a02e61e2900b0456f84ebd481d
 

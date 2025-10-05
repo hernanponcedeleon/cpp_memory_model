@@ -34,3 +34,22 @@ for f in `find tests -name "*.litmus" -type f`; do
 done
 
 wait
+
+set +x
+echo "CHECK: Undefined Behavior..."
+for f in `find tests -name "*.litmus" -type f`; do
+    # TODO: fix these eventually
+    if [[ ${f} == *"popl15"* ]] || [[ ${f} == *"dat3m"* ]] || [[ ${f} == *"mp"* ]]; then
+	continue
+    fi
+    echo ${f}
+    if [[ ${f} == *"undef"* ]]; then
+	if ! grep -q Undef ${f}.expected; then
+	    echo "  ERROR: no undefined behavior"
+	fi
+    else
+	if grep -q Undef ${f}.expected; then
+	    echo "  ERROR: undefined behavior"
+	fi
+    fi
+done

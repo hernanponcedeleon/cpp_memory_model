@@ -40,7 +40,10 @@ l0s = {
 }
 
 for s0, s1, l0 in product(s0s, s1s, l0s):
-    fname = f'coWW-{s0}-{s1}-{l0}.litmus'
+    ub = ''
+    if ('sna' in [s0, s1] and not 'none' in l0) or 'lna' in l0:
+        ub = '.undef'
+    fname = f'coWW-{s0}-{s1}-{l0}{ub}.litmus'
     out = shape.format(s0n=s0, s1n=s1, l0n=l0, s0=s0s[s0], s1=s1s[s1], l0=l0s[l0])
     with open(fname, 'w') as f:
         f.write(out)

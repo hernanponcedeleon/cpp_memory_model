@@ -32,7 +32,10 @@ s1s = {
 }
 
 for l0, s0, s1 in product(l0s, s0s, s1s):
-    fname = f'coRW-{l0}-{s0}-{s1}.litmus'
+    ub = ''
+    if 'sna' in s0:
+        ub = '.undef'
+    fname = f'coRW-{l0}-{s0}-{s1}{ub}.litmus'
     out = shape.format(l0n=l0, s0n=s0, s1n=s1, l0=l0s[l0], s0=s0s[s0], s1=s1s[s1])
     with open(fname, 'w') as f:
         f.write(out)

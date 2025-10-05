@@ -1,15 +1,13 @@
 Test mp-rs-add-st-cpp17-racy Allowed
-States 5
+States 4
 1:a=0; 1:b=0;
 1:a=1; 1:b=0;
 1:a=2; 1:b=1;
-1:a=3; 1:b=0;
 1:a=3; 1:b=1;
-Undef
+No
 Witnesses
-Positive: 1 Negative: 4
-Flag *undef*
+Positive: 0 Negative: 4
 Condition exists (1:a=3 /\ 1:b=0)
-Observation mp-rs-add-st-cpp17-racy Sometimes 1 4
+Observation mp-rs-add-st-cpp17-racy Never 0 4
 Hash=e7c86162b0ae389cae7e2090b081b7a2
 

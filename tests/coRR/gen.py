@@ -21,7 +21,7 @@ P1 (int* x) {{
 
 s0s = {
     'srlx': 'atomic_store_explicit(x, 1, memory_order_relaxed)',
-    'srel': 'atomic_store_explicit(x, 1, memory_order_release)',    
+    'srel': 'atomic_store_explicit(x, 1, memory_order_release)',
     'faddrlx': 'atomic_fetch_add_explicit(x, 1, memory_order_relaxed)',
     'faddrel': 'atomic_fetch_add_explicit(x, 1, memory_order_release)',
     'sna': '*x = 1',
@@ -32,7 +32,7 @@ l1s = {
     'lrlx-facq': 'atomic_load_explicit(x, memory_order_relaxed);\n  atomic_thread_fence(memory_order_acquire)',
     'lacq': 'atomic_load_explicit(x, memory_order_acquire)',
     'faddrlx': 'atomic_fetch_add_explicit(x, 0, memory_order_relaxed)',
-    'faddrlx-facq': 'atomic_fetch_add_explicit(x, 0, memory_order_relaxed);\n  atomic_thread_fence(memory_order_acquire)',    
+    'faddrlx-facq': 'atomic_fetch_add_explicit(x, 0, memory_order_relaxed);\n  atomic_thread_fence(memory_order_acquire)',
     'faddacq': 'atomic_fetch_add_explicit(x, 0, memory_order_acquire)',
     'lna': '*x',
 }
@@ -44,7 +44,10 @@ l2s = {
 }
 
 for s0, l1, l2 in product(s0s, l1s, l2s):
-    fname = f'coRR-{s0}-{l1}-{l2}.litmus'
+    ub = ''
+    if 'sna' in s0 or 'lna' in l1 or ('lna' in l2 and ('acq' not in l1 or 'rel' not in s0)):
+        ub = '.undef'
+    fname = f'coRR-{s0}-{l1}-{l2}{ub}.litmus'
     out = shape.format(s0n=s0, l1n=l1, l2n=l2, s0=s0s[s0], l1=l1s[l1], l2=l2s[l2])
     with open(fname, 'w') as f:
         f.write(out)
