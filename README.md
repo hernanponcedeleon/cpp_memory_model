@@ -10,7 +10,7 @@ Collection of C++ Memory Model litmus tests in `.litmus` format and reference me
 
 Litmus test naming convention:
 
-* `.racy`: well-defined executions but non-deterministic.
+* `.racy`: well-defined executions but insufficient synchronization to prevent the shape's outcome (~non-deterministic).
 * `.undef`: undefined behavior
 * `.cppXX`: precisely requires `./model/cppXX.cat`.
   * Absence of `.cppXX`: runs with default model (see below).
@@ -126,6 +126,7 @@ We incorporate this into the [model/cpp17.cat](./model/cpp17.cat) as follows:
 
 # References
 
+- [Power and Arm Litmus Tests (test6.pdf)](https://www.cl.cam.ac.uk/~pes20/ppc-supplemental/test6.pdf): Susmit Sarkar, Peter Sewell, Jade Alglave, Luc Maranget, Derek Williams, Understanding POWER Multiprocesors, PLDI '11. Supplemental material: _Quick reference for litmus test families_ (see [project page](https://www.cl.cam.ac.uk/~pes20/ppc-supplemental/index.html)).
 - [models/rc11.cat](./models/rc11.cat): sourced from [herd], originally written by Simon Colin.
 - [tests/popl15](./tests/popl15): sourced from [herd], originally from: Viktor Vafeiadis, Thibaut Balabonski, Soham Chakraborty, Robin Morisset, and Francesco Zappa Nardelli, _Common Compiler Optimisations are Invalid in the C11 Memory Model and what we can do about it_, POPL '15.
 - [tests/herd](./tests/herd): sourced from [hers].
