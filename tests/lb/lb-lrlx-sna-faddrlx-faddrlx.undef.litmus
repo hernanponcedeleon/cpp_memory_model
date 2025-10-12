@@ -13,4 +13,4 @@ P1 (int* x, int* y) {
   }
 }
 
-~exists(0:a=1)
+forall(0:a=0 \/ 0:a=1)

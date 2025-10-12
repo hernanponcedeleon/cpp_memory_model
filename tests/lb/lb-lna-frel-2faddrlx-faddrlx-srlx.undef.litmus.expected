@@ -1,0 +1,12 @@
+Test lb-lna-frel-2faddrlx-faddrlx-srlx-undef Required
+States 2
+0:a=0;
+0:a=1;
+Undef
+Witnesses
+Positive: 5 Negative: 0
+Flag *undef*
+Condition forall (0:a=0 \/ 0:a=1)
+Observation lb-lna-frel-2faddrlx-faddrlx-srlx-undef Always 5 0
+Hash=d1a6d5b3bb87ddc0dbc2405e7ece14d3
+

@@ -1,12 +1,12 @@
-Test lb-lrlx-frel-srlx-faddrlx-lna-srlx-undef Forbidden
+Test lb-lrlx-frel-srlx-faddrlx-lna-srlx-undef Required
 States 2
 0:a=0;
 0:a=1;
 Undef
 Witnesses
-Positive: 3 Negative: 2
+Positive: 5 Negative: 0
 Flag *undef*
-Condition ~exists (0:a=1)
-Observation lb-lrlx-frel-srlx-faddrlx-lna-srlx-undef Sometimes 2 3
+Condition forall (0:a=0 \/ 0:a=1)
+Observation lb-lrlx-frel-srlx-faddrlx-lna-srlx-undef Always 5 0
 Hash=40982261953a355995187c78ae4ed07a
 

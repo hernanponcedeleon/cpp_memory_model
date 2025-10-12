@@ -1,12 +1,12 @@
-Test lb-lna-srlx-faddrlx-facq-sna-undef Forbidden
+Test lb-lna-srlx-faddrlx-facq-sna-undef Required
 States 2
 0:a=0;
 0:a=1;
 Undef
 Witnesses
-Positive: 2 Negative: 1
+Positive: 3 Negative: 0
 Flag *undef*
-Condition ~exists (0:a=1)
-Observation lb-lna-srlx-faddrlx-facq-sna-undef Sometimes 1 2
+Condition forall (0:a=0 \/ 0:a=1)
+Observation lb-lna-srlx-faddrlx-facq-sna-undef Always 3 0
 Hash=8c04c3a01ad108bd7f40f10d6a704d17
 

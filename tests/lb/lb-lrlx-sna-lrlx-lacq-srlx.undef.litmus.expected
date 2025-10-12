@@ -1,12 +1,12 @@
-Test lb-lrlx-sna-lrlx-lacq-srlx-undef Forbidden
+Test lb-lrlx-sna-lrlx-lacq-srlx-undef Required
 States 2
 0:a=0;
 0:a=1;
 Undef
 Witnesses
-Positive: 3 Negative: 1
+Positive: 4 Negative: 0
 Flag *undef*
-Condition ~exists (0:a=1)
-Observation lb-lrlx-sna-lrlx-lacq-srlx-undef Sometimes 1 3
+Condition forall (0:a=0 \/ 0:a=1)
+Observation lb-lrlx-sna-lrlx-lacq-srlx-undef Always 4 0
 Hash=38a6304cedb8ed3c3e16582e9410ca06
 
