@@ -1,0 +1,12 @@
+Test mp-sna-srlx-lrlx-lrlx-undef Required
+States 2
+1:b=0;
+1:b=1;
+Undef
+Witnesses
+Positive: 3 Negative: 0
+Flag *undef*
+Condition forall (1:b=0 \/ 1:b=1)
+Observation mp-sna-srlx-lrlx-lrlx-undef Always 3 0
+Hash=260f7b591c7b75f1f66517d3bc858795
+

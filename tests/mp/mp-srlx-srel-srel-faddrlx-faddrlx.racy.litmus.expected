@@ -1,0 +1,11 @@
+Test mp-srlx-srel-srel-faddrlx-faddrlx-racy Required
+States 2
+1:b=0;
+1:b=1;
+Ok
+Witnesses
+Positive: 5 Negative: 0
+Condition forall (1:b=0 \/ 1:b=1)
+Observation mp-srlx-srel-srel-faddrlx-faddrlx-racy Always 5 0
+Hash=d0cadc3f589a30acfb4cef67a9ad10df
+

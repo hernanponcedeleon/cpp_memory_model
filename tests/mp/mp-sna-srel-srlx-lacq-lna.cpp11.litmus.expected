@@ -6,7 +6,7 @@ States 3
 Ok
 Witnesses
 Positive: 3 Negative: 0
-Condition ~exists ((1:a=1 \/ 1:a=2) /\ 1:b=0)
+Condition ~exists (not (1:a=0) /\ 1:b=0)
 Observation mp-sna-srel-srlx-lacq-lna-cpp11 Never 0 3
-Hash=afe2d1a02e61e2900b0456f84ebd481d
+Hash=65346cc8329ddc6216a7d78fc6e95be4
 

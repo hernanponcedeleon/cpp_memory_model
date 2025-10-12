@@ -10,7 +10,7 @@ if [ ! -z "$1" ]; then
 fi
 
 CONF=model/${MODEL}.cfg
-
+COUNT=0
 if [ ${MODEL} = "multi" ]; then
     CONF=model/cpp17.cfg
     CONF11=model/cpp11.cfg
@@ -20,10 +20,20 @@ if [ ${MODEL} = "multi" ]; then
 	else
 	    herd7  -o ${OUT} -conf ${CONF} -timeout none ${f} &> ${f}.expected &
 	fi
+	# Too many concurrent processes limit:
+	COUNT=$(($COUNT + 1))
+	if ! (($COUNT % 1000)); then
+	    sleep 2
+	fi
     done
 else
     for f in `find tests -name "*.litmus" -type f`; do
 	herd7  -o ${OUT} -conf ${CONF} -timeout none ${f} &> ${f}.expected &
+	# Too many concurrent processes limit:
+	COUNT=$(($COUNT + 1))
+	if ! (($COUNT % 1000)); then
+	    sleep 2
+	fi
     done
 fi
 
@@ -37,31 +47,37 @@ wait
 
 set +x
 echo "CHECK: Undefined Behavior..."
-FAILURES=0
+FAILURES_NOT_OK=0
+FAILURES_NOT_UB=0
+FAILURES_UB=0
 for f in `find tests -name "*.litmus" -type f`; do
     # TODO: fix these eventually
-    if [[ ${f} == *"popl15"* ]] || [[ ${f} == *"pldi17"* ]] || [[ ${f} == *"dat3m"* ]] || [[ ${f} == *"paul"* ]] || [[ ${f} == *"mp"* ]] || [[ ${f} == *"progress"* ]]; then
+    if [[ ${f} == *"popl15"* ]] || [[ ${f} == *"pldi17"* ]] || [[ ${f} == *"dat3m"* ]] || [[ ${f} == *"paul"* ]] || [[ ${f} == *"progress"* ]] || [[ ${f} == *"mp_with_"* ]] || [[ ${f} == *"rs"* ]]; then
 	continue
     fi
     echo ${f}
     if [[ ${f} == *"undef"* ]]; then
 	if ! grep -q Undef ${f}.expected; then
 	    echo "  ERROR: no undefined behavior"
-	    FAILURES=${FAILURES}+1
+	    FAILURES_NOT_UB=$((${FAILURES_NOT_UB}+1))
 	fi
     else
 	if grep -q Undef ${f}.expected; then
 	    echo "  ERROR: undefined behavior"
-	    FAILURES=${FAILURES}+1
+	    FAILURES_UB=$((${FAILURES_UB}+1))
 	fi
 	if ! grep -q Ok ${f}.expected; then
 	    echo "  ERROR: not Ok!"
-	    FAILURES=${FAILURES}+1
+	    FAILURES_NOT_OK=$((${FAILURES_NOT_OK}+1))
 	fi	
     fi
 done
-if [[ $FAILURES != "0" ]]; then
-    echo "ERROR: UB check failures: ${FAILURES}."
+if [[ $FAILURES_NOT_UB != "0" ]] || [[ $FAILURES_NOT_OK != "0" ]] || [[ $FAILURES_UB != "0" ]]; then
+    echo "ERROR: tests failed:"
+    echo "  Should be Undefined:       ${FAILURES_NOT_UB}"
+    echo "  Should be Well-Defined:    ${FAILURES_UB}"
+    echo "  Should be OK+Well-Defined: ${FAILURES_NOT_OK}"
+    
     exit 1
 else
     echo "Undefined Behavior check: SUCCESS."

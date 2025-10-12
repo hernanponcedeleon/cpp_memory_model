@@ -1,18 +1,19 @@
 C mp-sna-frel-srlx-lrlx-facq-lna
-{ [x] = 0; [y] = 0;  }
+{ [x] = 0; [y] = 0; }
 
 P0 (int* x, int* y) {
-  *y = 1;
+  *x = 1;
   atomic_thread_fence(memory_order_release);
-  atomic_store_explicit(x, 1, memory_order_relaxed);
+  atomic_store_explicit(y, 1, memory_order_relaxed);
 }
 
 P1 (int* x, int* y) {
-  int a = atomic_load_explicit(x, memory_order_relaxed);
+  int a = atomic_load_explicit(y, memory_order_relaxed);
   atomic_thread_fence(memory_order_acquire);
-  if (a == 1) {
-    int b = *y;
+  if (a != 0) {
+    int b = *x;
   }
 }
 
-~exists(1:a=1 /\ 1:b=0)
+
+~exists(~1:a=0 /\ 1:b=0)

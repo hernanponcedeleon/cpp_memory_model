@@ -1,0 +1,12 @@
+Test mp-faddrlx-faddrel-faddrlx-faddrlx-lna-undef Required
+States 2
+1:b=0;
+1:b=1;
+Undef
+Witnesses
+Positive: 5 Negative: 0
+Flag *undef*
+Condition forall (1:b=0 \/ 1:b=1)
+Observation mp-faddrlx-faddrel-faddrlx-faddrlx-lna-undef Always 5 0
+Hash=dab7c8b4d93d7f94b7c969b983cd44ca
+

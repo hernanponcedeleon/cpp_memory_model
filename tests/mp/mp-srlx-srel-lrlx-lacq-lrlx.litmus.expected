@@ -1,17 +1,11 @@
-Test mp-srlx-srel-lrlx-lacq-lrlx Allowed
-States 8
-1:a=0; 1:b=0; 1:c=0;
-1:a=0; 1:b=0; 1:c=1;
-1:a=0; 1:b=0; 1:c=2;
-1:a=1; 1:b=0; 1:c=2;
-1:a=1; 1:b=1; 1:c=1;
-1:a=1; 1:b=1; 1:c=2;
-1:a=2; 1:b=0; 1:c=1;
-1:a=2; 1:b=0; 1:c=2;
+Test mp-srlx-srel-lrlx-lacq-lrlx Forbidden
+States 2
+1:a=0; 1:b=0;
+1:a=1; 1:b=1;
 Ok
 Witnesses
-Positive: 1 Negative: 12
-Condition exists (1:a=1 /\ 1:b=0 /\ not (1:c=1))
-Observation mp-srlx-srel-lrlx-lacq-lrlx Sometimes 1 12
-Hash=756d1bff5ee22b5dcf2b7129a43fb6a4
+Positive: 3 Negative: 0
+Condition ~exists (not (1:a=0) /\ 1:b=0)
+Observation mp-srlx-srel-lrlx-lacq-lrlx Never 0 3
+Hash=6faa5430e29cd2d0ce596518196568cf
 

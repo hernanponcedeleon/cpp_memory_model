@@ -1,0 +1,12 @@
+Test mp-sna-frel-2faddrlx-faddacq-lna Forbidden
+States 3
+1:a=0; 1:b=0;
+1:a=1; 1:b=1;
+1:a=2; 1:b=1;
+Ok
+Witnesses
+Positive: 3 Negative: 0
+Condition ~exists (not (1:a=0) /\ 1:b=0)
+Observation mp-sna-frel-2faddrlx-faddacq-lna Never 0 3
+Hash=b27ca46025f5f3309eb2612c6945add4
+
