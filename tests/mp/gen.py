@@ -36,7 +36,7 @@ s1s = {
     'srlx': 'atomic_store_explicit(y, 1, memory_order_relaxed)',
     'faddrlx': 'atomic_fetch_add_explicit(y, 1, memory_order_relaxed)',
 
-    # Release patterns with fences
+    # Release Patterns with fences
     'frel-srlx': 'atomic_thread_fence(memory_order_release);\n  atomic_store_explicit(y, 1, memory_order_relaxed)',
     'frel-faddrlx': 'atomic_thread_fence(memory_order_release);\n  atomic_fetch_add_explicit(y, 1, memory_order_relaxed)',
     'frel-2srlx': 'atomic_thread_fence(memory_order_release);\n  atomic_store_explicit(y, 1, memory_order_relaxed);\n  atomic_store_explicit(y, 2, memory_order_relaxed)',
@@ -44,16 +44,18 @@ s1s = {
     'frel-srlx-faddrlx': 'atomic_thread_fence(memory_order_release);\n  atomic_store_explicit(y, 1, memory_order_relaxed);\n  atomic_fetch_add_explicit(y, 1, memory_order_relaxed)',
     'frel-faddrlx-srlx': 'atomic_thread_fence(memory_order_release);\n  atomic_fetch_add_explicit(y, 1, memory_order_relaxed);\n  atomic_store_explicit(y, 2, memory_order_relaxed)',
 
-    # Release pattern with operations
+    # Release Patterns with operations
     'srel': 'atomic_store_explicit(y, 1, memory_order_release)',
-    'srel-srel': 'atomic_store_explicit(y, 1, memory_order_release);\n  atomic_store_explicit(y, 2, memory_order_release)',
+    'faddrel': 'atomic_fetch_add_explicit(y, 1, memory_order_release)',
+
+    # Release Patterns with Release Sequences:
     'srel-faddrlx': 'atomic_store_explicit(y, 1, memory_order_release);\n  atomic_fetch_add_explicit(y, 1, memory_order_relaxed)',
     'faddrel-faddrlx': 'atomic_fetch_add_explicit(y, 1, memory_order_release);\n  atomic_fetch_add_explicit(y, 1, memory_order_relaxed)',
 
-    # Release sequences: pre-C++17
+    # Release Patterns with Release Sequences: pre-C++17
     'srel-srlx': 'atomic_store_explicit(y, 1, memory_order_release);\n  atomic_store_explicit(y, 2, memory_order_relaxed)',
 
-    # Not a release sequence pre-C++17
+    # Not a Release Sequence in C++:
     'faddrel-srlx': 'atomic_fetch_add_explicit(y, 1, memory_order_release);\n  atomic_store_explicit(y, 2, memory_order_relaxed)',
 }
 
@@ -65,15 +67,15 @@ l0s = {
     'lrlx': 'atomic_load_explicit(y, memory_order_relaxed)',
     'faddrlx': 'atomic_fetch_add_explicit(y, 0, memory_order_relaxed)',
 
-    # Acquire patterns with fences
+    # Acquire Patterns with fences
     'lrlx-facq': 'atomic_load_explicit(y, memory_order_relaxed);\n  atomic_thread_fence(memory_order_acquire)',
     'faddrlx-facq': 'atomic_fetch_add_explicit(y, 0, memory_order_relaxed);\n  atomic_thread_fence(memory_order_acquire)',
 
-    # Acquire patterns with operations
+    # Acquire Patterns with operations
     'lacq': 'atomic_load_explicit(y, memory_order_acquire)',
     'faddacq': 'atomic_fetch_add_explicit(y, 0, memory_order_acquire)',
 
-    # Acquire sequences: not supported in C++
+    # Not an Acquire Sequence in C++:
     'lrlx-lacq': 'atomic_load_explicit(y, memory_order_relaxed);\n  int c = atomic_load_explicit(y, memory_order_acquire)',
 }
 
@@ -90,7 +92,7 @@ P2 (int* y) {
 """
 
 # Release and Acquire patterns:
-release_patterns = ['frel-srlx', 'frel-faddrlx', 'frel-2srlx', 'frel-2faddrlx', 'frel-srlx-faddrlx', 'frel-faddrlx-srlx', 'srel', 'srel-srel', 'srel-faddrlx', 'faddrel-faddrlx']
+release_patterns = ['frel-srlx', 'frel-faddrlx', 'frel-2srlx', 'frel-2faddrlx', 'frel-srlx-faddrlx', 'frel-faddrlx-srlx', 'srel', 'faddrel', 'srel-srel', 'srel-faddrlx', 'faddrel-faddrlx']
 acquire_patterns_no_sequences = ['lrlx-facq', 'faddrlx-facq', 'lacq', 'faddacq']
 acquire_patterns = acquire_patterns_no_sequences + ['lrlx-lacq'] # BUG: lrlx-lacq should not create an acquire pattern
 
