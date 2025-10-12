@@ -1,0 +1,11 @@
+Test lb-lrlx-srel-lrlx-lacq-srlx-racy Required
+States 2
+0:a=0;
+0:a=1;
+Ok
+Witnesses
+Positive: 13 Negative: 0
+Condition forall (0:a=0 \/ 0:a=1)
+Observation lb-lrlx-srel-lrlx-lacq-srlx-racy Always 13 0
+Hash=ed31ec5f72c2f37dfd0ded030f83ede8
+

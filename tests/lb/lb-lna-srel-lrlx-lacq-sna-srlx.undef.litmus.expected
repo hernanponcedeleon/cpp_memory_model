@@ -1,0 +1,12 @@
+Test lb-lna-srel-lrlx-lacq-sna-undef Required
+States 2
+0:a=0;
+0:a=1;
+Undef
+Witnesses
+Positive: 13 Negative: 0
+Flag *undef*
+Condition forall (0:a=0 \/ 0:a=1)
+Observation lb-lna-srel-lrlx-lacq-sna-undef Always 13 0
+Hash=b79b7bad17d9f21bd1d19212ede2ca1b
+

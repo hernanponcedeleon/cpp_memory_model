@@ -124,7 +124,7 @@ for s0, s1, l0, l1 in product(s0s, s1s, l0s, l1s):
     # If C++ < 17 and C++ >=17 condition differs generate two versions of the test, one for C++11 and one for C++17:
     if cond != cond11 or ub != ub11 or map != map:
         fname = f'mp-{s0}-{s1}-{l0}-{l1}.cpp11{ub11}.litmus'
-        out = shape.format(s0n=s0, s1n=s1, l0n=l0, l1n=l1, s0=s0s[s0], s1=s1s[s1], l0=l0s[l0], l1=l1s[l1], cond=cond11, ub='-cpp11' + ub11.replace('.','-'), P2='\n')
+        out = shape.format(s0n=s0, s1n=s1, l0n=l0, l1n=l1, s0=s0s[s0], s1=s1s[s1], l0=l0s[l0], l1=l1s[l1], cond=cond11, ub='-cpp11' + ub11.replace('.','-'), P2='')
         with open(fname, 'w') as f:
             f.write(out)
         # If acquire sequence: generate a second version of this test with external thread
@@ -144,6 +144,6 @@ for s0, s1, l0, l1 in product(s0s, s1s, l0s, l1s):
             f.write(out)
 
     fname = f'mp-{s0}-{s1}-{l0}-{l1}{ub}.litmus'
-    out = shape.format(s0n=s0, s1n=s1, l0n=l0, l1n=l1, s0=s0s[s0], s1=s1s[s1], l0=l0s[l0], l1=l1s[l1], cond=cond, ub=ub.replace('.','-'), P2='\n')
+    out = shape.format(s0n=s0, s1n=s1, l0n=l0, l1n=l1, s0=s0s[s0], s1=s1s[s1], l0=l0s[l0], l1=l1s[l1], cond=cond, ub=ub.replace('.','-'), P2='')
     with open(fname, 'w') as f:
         f.write(out)

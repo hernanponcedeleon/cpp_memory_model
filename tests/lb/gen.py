@@ -15,7 +15,7 @@ P1 (int* x, int* y) {{
     {s1};
   }}
 }}
-
+{P2}
 {cond}"""
 
 ok_cond = '~exists(0:a=1)'
@@ -83,10 +83,19 @@ s1s = {
     'faddrlx': 'atomic_fetch_add_explicit(y, 1, memory_order_relaxed)',
 }
 
+P2 = """
+P2 (int* x) {
+  atomic_store_explicit(x, 0, memory_order_relaxed);
+}
+"""
+
 # Release and Acquire patterns:
-release_patterns = ['frel-srlx', 'frel-faddrlx', 'frel-2srlx', 'frel-2faddrlx', 'frel-srlx-faddrlx', 'frel-faddrlx-srlx', 'srel', 'faddrel', 'srel-srel', 'srel-faddrlx', 'faddrel-faddrlx']
+release_sequences = ['frel-2srlx', 'frel-2faddrlx', 'frel-srlx-faddrlx', 'frel-faddrlx-srlx', 'srel-srel', 'srel-faddrlx', 'faddrel-faddrlx']
+release_patterns_no_sequences = ['frel-srlx', 'frel-faddrlx', 'srel', 'faddrel']
+release_patterns = release_patterns_no_sequences + release_sequences
 acquire_patterns_no_sequences = ['lrlx-facq', 'faddrlx-facq', 'lacq', 'faddacq']
-acquire_patterns = acquire_patterns_no_sequences + ['lrlx-lacq'] # BUG: lrlx-lacq should not create an acquire pattern
+acquire_sequences = ['lrlx-lacq']
+acquire_patterns = acquire_patterns_no_sequences + acquire_sequences # BUG: lrlx-lacq should not create an acquire pattern
 
 # Pre C++17 release pattenrs include release sequences:
 release_patterns_cpp11 = release_patterns + ['srel-srlx']
@@ -112,11 +121,26 @@ for l0, s0, l1, s1 in product(l0s, s0s, l1s, s1s):
     # If C++ < 17 and C++ >=17 condition differs generate two versions of the test, one for C++11 and one for C++17:
     if cond != cond11 or ub != ub11 or map != map11:
         fname = f'lb-{l0}-{s0}-{l1}-{s1}.cpp11{ub11}.litmus'
-        out = shape.format(l0n=l0, s0n=s0, l1n=l1, s1n=s1, l0=l0s[l0], s0=s0s[s0], l1=l1s[l1], s1=s1s[s1], cond=cond11, ub='-cpp11' + ub11.replace('.','-'))
+        out = shape.format(l0n=l0, s0n=s0, l1n=l1, s1n=s1, l0=l0s[l0], s0=s0s[s0], l1=l1s[l1], s1=s1s[s1], cond=cond11, ub='-cpp11' + ub11.replace('.','-'), P2='')
+        with open(fname, 'w') as f:
+            f.write(out)
+        # If acquire sequence: generate a second version of this test with external thread
+        if l1 in acquire_sequences and s0 not in release_sequences:
+            condAS, ubAS, _ = check(l0, s0, l1, s1, release_patterns_cpp11, acquire_patterns_no_sequences)
+            fname = f'lb-{l0}-{s0}-{l1}-{s1}-srlx.cpp11{ubAS}.litmus'
+            out = shape.format(l0n=l0, s0n=s0, l1n=l1, s1n=s1, l0=l0s[l0], s0=s0s[s0], l1=l1s[l1], s1=s1s[s1], cond=condAS, ub=ubAS.replace('.','-'), P2=P2)
+            with open(fname, 'w') as f:
+                f.write(out)
+
+    # If acquire sequence: generate a second version of this test with external thread
+    if l1 in acquire_sequences and s0 not in release_sequences:
+        condAS, ubAS, _ = check(l0, s0, l1, s1, release_patterns, acquire_patterns_no_sequences)
+        fname = f'lb-{l0}-{s0}-{l1}-{s1}-srlx{ubAS}.litmus'
+        out = shape.format(l0n=l0, s0n=s0, l1n=l1, s1n=s1, l0=l0s[l0], s0=s0s[s0], l1=l1s[l1], s1=s1s[s1], cond=condAS, ub=ubAS.replace('.','-'), P2=P2)
         with open(fname, 'w') as f:
             f.write(out)
 
     fname = f'lb-{l0}-{s0}-{l1}-{s1}{ub}.litmus'
-    out = shape.format(l0n=l0, s0n=s0, l1n=l1, s1n=s1, l0=l0s[l0], s0=s0s[s0], l1=l1s[l1], s1=s1s[s1], cond=cond, ub=ub.replace('.','-'))
+    out = shape.format(l0n=l0, s0n=s0, l1n=l1, s1n=s1, l0=l0s[l0], s0=s0s[s0], l1=l1s[l1], s1=s1s[s1], cond=cond, ub=ub.replace('.','-'), P2='')
     with open(fname, 'w') as f:
         f.write(out)

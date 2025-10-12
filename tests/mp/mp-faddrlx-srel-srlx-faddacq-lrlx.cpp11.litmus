@@ -14,5 +14,4 @@ P1 (int* x, int* y) {
   }
 }
 
-
 ~exists(~1:a=0 /\ 1:b=0)

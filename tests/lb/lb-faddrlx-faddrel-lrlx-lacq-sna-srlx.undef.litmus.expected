@@ -1,0 +1,12 @@
+Test lb-faddrlx-faddrel-lrlx-lacq-sna-undef Required
+States 2
+0:a=0;
+0:a=1;
+Undef
+Witnesses
+Positive: 13 Negative: 0
+Flag *undef*
+Condition forall (0:a=0 \/ 0:a=1)
+Observation lb-faddrlx-faddrel-lrlx-lacq-sna-undef Always 13 0
+Hash=f6b65462a28e3ab78f6d8f41136e1525
+
