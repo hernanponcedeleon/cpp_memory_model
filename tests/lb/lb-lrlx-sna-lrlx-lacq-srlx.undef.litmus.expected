@@ -1,0 +1,12 @@
+Test lb-lrlx-sna-lrlx-lacq-srlx-undef Forbidden
+States 2
+0:a=0;
+0:a=1;
+Undef
+Witnesses
+Positive: 3 Negative: 1
+Flag *undef*
+Condition ~exists (0:a=1)
+Observation lb-lrlx-sna-lrlx-lacq-srlx-undef Sometimes 1 3
+Hash=38a6304cedb8ed3c3e16582e9410ca06
+

@@ -1,4 +1,4 @@
-C coRR-srlx-lna-lna
+C coRR-srlx-lna-lna-undef
 { [x] = 0; }
 
 P0 (int* x) {

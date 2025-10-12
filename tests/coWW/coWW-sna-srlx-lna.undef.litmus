@@ -1,4 +1,4 @@
-C coWW-sna-srlx-lna
+C coWW-sna-srlx-lna-undef
 { [x] = 0; }
 
 P0 (int* x) {

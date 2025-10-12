@@ -1,4 +1,4 @@
-Test coRR-sna-faddacq-lrlx Forbidden
+Test coRR-sna-faddacq-lrlx-undef Forbidden
 States 2
 1:a=0; 1:b=0;
 1:a=1; 1:b=1;
@@ -7,6 +7,6 @@ Witnesses
 Positive: 2 Negative: 0
 Flag *undef*
 Condition ~exists (1:a=1 /\ 1:b=0)
-Observation coRR-sna-faddacq-lrlx Never 0 2
+Observation coRR-sna-faddacq-lrlx-undef Never 0 2
 Hash=163fdfc02c83720138a0b4f23e82dcb9
 

@@ -1,10 +1,10 @@
 Test C02 Required
 States 1
 0:r0=0; [y]=1;
-No
+Ok
 Witnesses
-Positive: 0 Negative: 1
-Condition forall (0:r0=1 /\ [y]=1)
-Observation C02 Never 0 1
+Positive: 1 Negative: 0
+Condition forall (0:r0=0 /\ [y]=1)
+Observation C02 Always 1 0
 Hash=56bc0cc0c4593895b845386c64b74574
 

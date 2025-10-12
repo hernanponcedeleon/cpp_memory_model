@@ -1,0 +1,10 @@
+Test lb-lrlx-frel-srlx-lacq-sna Forbidden
+States 1
+0:a=0;
+Ok
+Witnesses
+Positive: 2 Negative: 0
+Condition ~exists (0:a=1)
+Observation lb-lrlx-frel-srlx-lacq-sna Never 0 2
+Hash=fcb2db23852d983b8cea4ded745f6a2b
+

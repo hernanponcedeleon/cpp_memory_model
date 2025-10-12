@@ -3,29 +3,45 @@ C++ Memory Model Litmus tests
 
 Collection of C++ Memory Model litmus tests in `.litmus` format and reference memory models in `.cat`.
 
-# References
-
-- [models/rc11.cat](./models/rc11.cat): sourced from [herd], originally written by Simon Colin.
-- [tests/popl15](./tests/popl15): sourced from [herd], originally from: Viktor Vafeiadis, Thibaut Balabonski, Soham Chakraborty, Robin Morisset, and Francesco Zappa Nardelli, _Common Compiler Optimisations are Invalid in the C11 Memory Model and what we can do about it_, POPL '15.
-- [tests/herd](./tests/herd): sourced from [hers].
-- [tests/pldi17](./tests/pld17): Ori Lahav, Viktor Vafeiadis, Jeehoon Kang, Chung-Kil Hur, and Derek Dreyer, _Repairing sequential consistency in C/C++11_, PLDI '17.
-- [tests/dat3m](./tests/dat3m): sourced from Dartagnan's test suite at [Dat3M](https://github.com/hernanponcedeleon/Dat3M).
-- [tests/cpp17]: sourced from Hans Boehm, Olivier Giroux, and Viktor Vafeiades, [P0982R1: Weaken Release Sequences](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0982r1.html), 2018. Also from [mailing list discussion](https://lists.isocpp.org/parallel/2018/03/1643.php) and [P0668](http://wg21.link/p0668).
-- [tests/paul_oota]: https://github.com/paulmckrcu/oota/tree/master/litmus
-
 [herd]: https://github.com/herd/herdtools7
+[Dartagnan]: https://github.com/hernanponcedeleon/Dat3M
 
-TODO:
-- Add more tests:
-  - https://github.com/rymrg/rocker/tree/popl21/examples
-  - https://github.com/rymrg/rocker/tree/pldi19/examples/submission
-  - Bridging the Gap between Programming Languages and Hardware Weak Memory Models
-  - mp-release-sequence-store-and-external-store.litmus should not be accepted by rc11? need to talk with Ori
-- Include new lb shapes (from LICM, MRD, ...)
+# Litmus Test Naming Convention
 
+Litmus test naming convention:
 
-# Differences between C++11 and RC11
+* `.racy`: well-defined executions but non-deterministic.
+* `.undef`: undefined behavior
+* `.cppXX`: precisely requires `./model/cppXX.cat`.
+  * Absence of `.cppXX`: runs with default model (see below).
 
+# Instructions
+
+To run all tests:
+
+* With [herd]: `./ci/run`
+* With [Dartagnan]: `./ci/run_dat3m`
+
+Currently, only Dartagnan supports running a sub-set of the forward progress tests.
+To run the remaining tests:  `./ci/run_rt`.
+
+# Models
+
+Available models in `model/`.
+`./ci/run` runs all tests with as follows by default.
+**Default Model**:
+- [`model/cpp17.cat`](./model/cpp17.cat) for tests that don't specify `.cppXX`.
+- [`model/cpp11.cat`](./model/cpp11.cat) for tests that specify `.cpp11`.
+
+To choose a different model: `./ci/run <model_name>` with a `<model_name>` matching `./model/<model_name>.cat`.
+
+## RC11
+
+The `[./model/rc11.cat]` was adapted for [herd] by Simon Colin from: Ori Lahav, Viktor Vafeiadis, Jeehoon Kang, Chung-Kil Hur, and Derek Dreyer, _Repairing sequential consistency in C/C++11_, PLDI '17.
+
+## C++11
+
+The [`./model/cpp11.cat`](./model/cpp11.cat) deviates from RC11 as follows.
 In RC11, tests of the form:
 
 ```cpp
@@ -80,8 +96,9 @@ Furthermore, C++11 lacks the OOTA fix:
 - acyclic (sb | rf) as no-thin-air
 ```
 
-# Differences between C++11 and C++17
+## C++17
 
+The [`./model/cpp17.cat`](./model/cpp17.cat) deviates from the C++11 [`./model/cpp11.cat`](./model/cpp11.cat) as follows.
 C++17 removed the capability of contiguous same thread writes to extend release sequences:
 
 > A release sequence headed by a release operation A on an atomic object M is a maximal contiguous sub-sequence of side effects in the modification order of M, where the first operation is A, and every subsequent operation is ~performed by the same thread that performed A**, or is~ an atomic read-modify-write operation.
@@ -107,7 +124,20 @@ We incorporate this into the [model/cpp17.cat](./model/cpp17.cat) as follows:
 + let rs = [W & (RLX | REL | ACQ_REL | ACQ | SC)]; (rf; myrmw)*
 ```
 
-# Forward progress tests
+# References
 
-Work in progress. For now, written in C++ rather than `.litmus` format.
-To run compile and run them all do `./ci/run_rt`.
+- [models/rc11.cat](./models/rc11.cat): sourced from [herd], originally written by Simon Colin.
+- [tests/popl15](./tests/popl15): sourced from [herd], originally from: Viktor Vafeiadis, Thibaut Balabonski, Soham Chakraborty, Robin Morisset, and Francesco Zappa Nardelli, _Common Compiler Optimisations are Invalid in the C11 Memory Model and what we can do about it_, POPL '15.
+- [tests/herd](./tests/herd): sourced from [hers].
+- [tests/pldi17](./tests/pld17): Ori Lahav, Viktor Vafeiadis, Jeehoon Kang, Chung-Kil Hur, and Derek Dreyer, _Repairing sequential consistency in C/C++11_, PLDI '17.
+- [tests/dat3m](./tests/dat3m): sourced from Dartagnan's test suite at [Dat3M](https://github.com/hernanponcedeleon/Dat3M).
+- [tests/cpp17]: sourced from Hans Boehm, Olivier Giroux, and Viktor Vafeiades, [P0982R1: Weaken Release Sequences](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0982r1.html), 2018. Also from [mailing list discussion](https://lists.isocpp.org/parallel/2018/03/1643.php) and [P0668](http://wg21.link/p0668).
+- [tests/paul_oota]: https://github.com/paulmckrcu/oota/tree/master/litmus
+
+TODO:
+- Add more tests:
+  - https://github.com/rymrg/rocker/tree/popl21/examples
+  - https://github.com/rymrg/rocker/tree/pldi19/examples/submission
+  - Bridging the Gap between Programming Languages and Hardware Weak Memory Models
+  - mp-release-sequence-store-and-external-store.litmus should not be accepted by rc11? need to talk with Ori
+- Include new lb shapes (from LICM, MRD, ...)

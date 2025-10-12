@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from itertools import product
 
-shape = """C coRW-{l0n}-{s0n}-{s1n}
+shape = """C coRW-{l0n}-{s0n}-{s1n}{ub}
 {{ [x] = 0; }}
 
 P0 (int* x) {{
@@ -36,6 +36,6 @@ for l0, s0, s1 in product(l0s, s0s, s1s):
     if 'sna' in s0:
         ub = '.undef'
     fname = f'coRW-{l0}-{s0}-{s1}{ub}.litmus'
-    out = shape.format(l0n=l0, s0n=s0, s1n=s1, l0=l0s[l0], s0=s0s[s0], s1=s1s[s1])
+    out = shape.format(l0n=l0, s0n=s0, s1n=s1, l0=l0s[l0], s0=s0s[s0], s1=s1s[s1], ub=ub.replace('.','-'))
     with open(fname, 'w') as f:
         f.write(out)

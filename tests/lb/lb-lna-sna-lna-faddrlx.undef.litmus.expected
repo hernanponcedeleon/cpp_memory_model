@@ -1,0 +1,12 @@
+Test lb-lna-sna-lna-faddrlx-undef Forbidden
+States 2
+0:a=0;
+0:a=1;
+Undef
+Witnesses
+Positive: 2 Negative: 1
+Flag *undef*
+Condition ~exists (0:a=1)
+Observation lb-lna-sna-lna-faddrlx-undef Sometimes 1 2
+Hash=a25011308d60b6fd420e7935aa02db1f
+

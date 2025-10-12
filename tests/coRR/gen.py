@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from itertools import product
 
-shape = """C coRR-{s0n}-{l1n}-{l2n}
+shape = """C coRR-{s0n}-{l1n}-{l2n}{ub}
 {{ [x] = 0; }}
 
 P0 (int* x) {{
@@ -48,6 +48,6 @@ for s0, l1, l2 in product(s0s, l1s, l2s):
     if 'sna' in s0 or 'lna' in l1 or ('lna' in l2 and ('acq' not in l1 or 'rel' not in s0)):
         ub = '.undef'
     fname = f'coRR-{s0}-{l1}-{l2}{ub}.litmus'
-    out = shape.format(s0n=s0, l1n=l1, l2n=l2, s0=s0s[s0], l1=l1s[l1], l2=l2s[l2])
+    out = shape.format(s0n=s0, l1n=l1, l2n=l2, s0=s0s[s0], l1=l1s[l1], l2=l2s[l2], ub=ub.replace('.','-'))
     with open(fname, 'w') as f:
         f.write(out)

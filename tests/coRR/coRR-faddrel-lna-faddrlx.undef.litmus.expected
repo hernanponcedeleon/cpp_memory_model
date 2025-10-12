@@ -1,4 +1,4 @@
-Test coRR-faddrel-lna-faddrlx Forbidden
+Test coRR-faddrel-lna-faddrlx-undef Forbidden
 States 2
 1:a=0; 1:b=0;
 1:a=1; 1:b=1;
@@ -7,6 +7,6 @@ Witnesses
 Positive: 2 Negative: 0
 Flag *undef*
 Condition ~exists (1:a=1 /\ 1:b=0)
-Observation coRR-faddrel-lna-faddrlx Never 0 2
+Observation coRR-faddrel-lna-faddrlx-undef Never 0 2
 Hash=c7a7b67ee9e4caa439cc7b4b3d1a3d19
 

@@ -1,0 +1,10 @@
+Test lb-lrlx-frel-2srlx-faddrlx-facq-srlx Forbidden
+States 1
+0:a=0;
+Ok
+Witnesses
+Positive: 3 Negative: 0
+Condition ~exists (0:a=1)
+Observation lb-lrlx-frel-2srlx-faddrlx-facq-srlx Never 0 3
+Hash=bb4b83deafd32135523e6a2fbec5e360
+

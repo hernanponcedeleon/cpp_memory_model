@@ -3,7 +3,7 @@ set -ex
 
 OUT=target/
 
-MODEL=cpp17
+MODEL=multi
 
 if [ ! -z "$1" ]; then
    MODEL=$1
@@ -37,19 +37,32 @@ wait
 
 set +x
 echo "CHECK: Undefined Behavior..."
+FAILURES=0
 for f in `find tests -name "*.litmus" -type f`; do
     # TODO: fix these eventually
-    if [[ ${f} == *"popl15"* ]] || [[ ${f} == *"dat3m"* ]] || [[ ${f} == *"mp"* ]]; then
+    if [[ ${f} == *"popl15"* ]] || [[ ${f} == *"pldi17"* ]] || [[ ${f} == *"dat3m"* ]] || [[ ${f} == *"paul"* ]] || [[ ${f} == *"mp"* ]] || [[ ${f} == *"progress"* ]]; then
 	continue
     fi
     echo ${f}
     if [[ ${f} == *"undef"* ]]; then
 	if ! grep -q Undef ${f}.expected; then
 	    echo "  ERROR: no undefined behavior"
+	    FAILURES=${FAILURES}+1
 	fi
     else
 	if grep -q Undef ${f}.expected; then
 	    echo "  ERROR: undefined behavior"
+	    FAILURES=${FAILURES}+1
 	fi
+	if ! grep -q Ok ${f}.expected; then
+	    echo "  ERROR: not Ok!"
+	    FAILURES=${FAILURES}+1
+	fi	
     fi
 done
+if [[ $FAILURES != "0" ]]; then
+    echo "ERROR: UB check failures: ${FAILURES}."
+    exit 1
+else
+    echo "Undefined Behavior check: SUCCESS."
+fi

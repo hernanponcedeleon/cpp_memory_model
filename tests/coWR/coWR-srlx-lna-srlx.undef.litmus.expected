@@ -1,4 +1,4 @@
-Test coWR-srlx-lna-srlx Forbidden
+Test coWR-srlx-lna-srlx-undef Forbidden
 States 3
 0:a=1; [x]=1;
 0:a=1; [x]=2;
@@ -8,6 +8,6 @@ Witnesses
 Positive: 3 Negative: 0
 Flag *undef*
 Condition ~exists (0:a=2 /\ [x]=1)
-Observation coWR-srlx-lna-srlx Never 0 3
+Observation coWR-srlx-lna-srlx-undef Never 0 3
 Hash=a89ff31a63b11ffb5fb276e2b5e1b97c
 

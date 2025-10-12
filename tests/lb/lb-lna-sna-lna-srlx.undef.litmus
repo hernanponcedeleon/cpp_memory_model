@@ -1,0 +1,16 @@
+C lb-lna-sna-lna-srlx-undef
+{ [x] = 0; [y] = 0; }
+
+P0 (int* x, int* y) {
+  int a = *y;
+  *x = 1;
+}
+
+P1 (int* x, int* y) {
+  int b = *x;
+  if (b != 0) {
+    atomic_store_explicit(y, 1, memory_order_relaxed);
+  }
+}
+
+~exists(0:a=1)

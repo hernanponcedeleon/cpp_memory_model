@@ -1,0 +1,11 @@
+Test lb-faddrlx-srlx-lrlx-srlx-racy Required
+States 2
+0:a=0;
+0:a=1;
+Ok
+Witnesses
+Positive: 3 Negative: 0
+Condition forall (0:a=0 \/ 0:a=1)
+Observation lb-faddrlx-srlx-lrlx-srlx-racy Always 3 0
+Hash=f3d6b49ab6ad4abc9facc6c84a5a3009
+
